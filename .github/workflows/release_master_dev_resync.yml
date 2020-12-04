@@ -11,20 +11,21 @@ jobs:
 
       - name: Update version
         run: |
-            git config user.name 'GitHub'
-            git config user.email 'noreply@github.com'
-            git describe --tags
+            # git config user.name 'GitHub'
+            # git config user.email 'noreply@github.com'
+            echo "Version tag: $(git describe --tags)"
             # Get current version tag
             git describe --tags | cut -d 'v' -f 2 >> tests/versions.txt
-            git checkout -b ci/sync_master_back_to_dev
-            git add tests/versions.txt
-            git commit -m 'Update backward comp test versions'
+            # git checkout -b ci/sync_master_back_to_dev
+            # git add tests/versions.txt
+            # git commit -m 'Update backward comp test versions'
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
+          commit-message: 'Update backward comp test versions'
           branch: ci/sync_master_back_to_dev
-          base: develop
+          base: master 
           delete-branch: true
           title: 'Merge back master in develop after release'
           body: |
