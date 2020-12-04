@@ -13,7 +13,7 @@ jobs:
         run: |
             git config user.name 'GitHub'
             git config user.email 'noreply@github.com'
-            git checkout master
+            git describe --tags
             # Get current version tag
             git describe --tags | cut -d 'v' -f 2 >> tests/versions.txt
             git checkout -b ci/sync_master_back_to_dev
